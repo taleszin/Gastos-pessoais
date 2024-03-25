@@ -1,4 +1,6 @@
 <?php
+session_start(); // Inicia a sessão
+
 // Inclui o arquivo de configuração do banco de dados
 include("config.php");
 
@@ -9,7 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $usuario = json_decode($json_data, true);
 
-    $sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
+    // Prepara a declaração SQL para atualizar a senha do usuário
+    $sql = "UPDATE usuarios SET senha = ? WHERE email = ?";
 
     // Prepara a declaração
     $stmt = $conexao->prepare($sql);
@@ -23,14 +26,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $senha_hash = password_hash($usuario['senha'], PASSWORD_DEFAULT);
 
     // Vincula os parâmetros da declaração SQL
-    $stmt->bind_param("sss", $usuario['nome'], $usuario['email'], $senha_hash);
+    $stmt->bind_param("ss", $senha_hash, $usuario['email']);
 
     // Executa a declaração
     if ($stmt->execute() === true) {
         // Se a execução for bem-sucedida, envia uma resposta de sucesso
-        echo "Usuário registrado com sucesso.";
+        echo "Senha atualizada com sucesso.";
     } else {
-        
+        // Se ocorrer um erro, envie uma resposta de erro
+        echo "Erro ao atualizar a senha: " . $stmt->error;
     }
 
     // Fecha a declaração

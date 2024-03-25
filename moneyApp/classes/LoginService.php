@@ -1,36 +1,37 @@
 <?php
-// Inclui o arquivo de configuração do banco de dados
 include("config.php");
-
-// Verifica se a requisição é do tipo POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recebe os dados do formulário
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
+    $data = json_decode(file_get_contents("php://input"), true);
 
-    // Query para selecionar o usuário com o email fornecido
-    $sql = "SELECT * FROM usuarios WHERE email = ?";
-    $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    if (isset($data['email']) && isset($data['senha'])) {
+        $email = $data['email'];
+        $senha = $data['senha'];
 
-    // Verifica se o usuário existe no banco de dados
-    if ($result->num_rows == 1) {
-        $row = $result->fetch_assoc();
-        // Verifica se a senha fornecida corresponde à senha no banco de dados
-        if (password_verify($senha, $row['senha'])) {
-            // Se a senha estiver correta, o login é bem-sucedido
-            echo "Login bem-sucedido!";
-            header("Location: ../view/inicio.php");
-            exit();
+        $sql = "SELECT * FROM usuarios WHERE email = ?";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            if (password_verify($senha, $row['senha'])) {
+                echo json_encode(["success" => true, "message" => "Login Realizado com sucesso $email + $senha"]);
+                exit();
+            } else {
+                // Senha incorreta
+                echo json_encode(["success" => false, "error" => "Senha incorreta."]);
+                exit();
+            }
         } else {
-            // Senha incorreta
-            echo "Senha incorreta.";
+            // Usuário não encontrado
+            echo json_encode(["success" => false, "error" => "Usuario indefinido."]);
+            exit();
         }
     } else {
-        // Usuário não encontrado
-        echo "Usuário não encontrado.";
+        // Dados de entrada inválidos
+        echo json_encode(["success" => false, "error" => "Dados de entrada inválidos."]);
+        exit();
     }
 }
 ?>

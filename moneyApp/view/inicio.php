@@ -1,5 +1,9 @@
 <?php
-// Aqui você pode adicionar lógica PHP para verificar se o usuário está autenticado e redirecioná-lo para a página de login se não estiver.
+session_start();
+if(isset($_SESSION['id_usuario']) && isset($_SESSION['email'])) {
+    $id_usuario = $_SESSION['id_usuario'];
+    $email = $_SESSION['email'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -9,10 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gastos Pessoais</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Adicione outras importações de estilos, se necessário -->
-    <style>
-        /* Adicione estilos personalizados aqui */
-    </style>
 </head>
 <body>
     <header>
@@ -60,6 +60,5 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- Adicione outros scripts, se necessário -->
 </body>
 </html>

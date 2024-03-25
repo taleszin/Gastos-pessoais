@@ -1,5 +1,4 @@
 <?php
-// Inclui o arquivo de serviço de login
 include("../classes/LoginService.php");
 ?>
 
@@ -20,22 +19,18 @@ include("../classes/LoginService.php");
                         <h3 class="mb-0">Login - Gerenciador Financeiro Pessoal</h3>
                     </div>
                     <div class="card-body">
-                        <?php if(isset($mensagem)) { ?>
-                            <div class="alert alert-danger" role="alert">
-                                <?php echo $mensagem; ?>
-                            </div>
-                        <?php } ?>
-                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                            <div class="form-group">
-                                <label for="email">Email:</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="senha">Senha:</label>
-                                <input type="password" class="form-control" id="senha" name="senha" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Entrar</button>
-                        </form>
+                    <div id="error-message" style="color: red;"></div>
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="senha">Senha:</label>
+                            <input type="password" class="form-control" id="senha" name="senha" required>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="login();">Entrar</button>
+                    </form>
                     </div>
                 </div>
             </div>
@@ -45,5 +40,6 @@ include("../classes/LoginService.php");
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="../js/cadastro.js"></script>
 </body>
 </html>

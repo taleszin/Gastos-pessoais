@@ -14,10 +14,8 @@ include("classes/config.php");
     <header>
         <div class="container">
             <h1>Gerenciador Financeiro Pessoal</h1>
-            <!-- Adicione aqui opções de navegação, como login, registro, etc., se aplicável -->
         </div>
     </header>
-
     <main>
         <div class="container">
             <div class="row">
@@ -25,25 +23,13 @@ include("classes/config.php");
                     <section class="cta-section">
                         <h2>Bem-vindo ao seu Gerenciador Financeiro Pessoal</h2>
                         <p>Aqui você pode controlar suas finanças de forma simples e eficaz.</p>
-                        <a href="view/login.php" class="btn btn-success">Login</a> <!-- Link para a página de login -->
-                        <a href="view/registro.php" class="btn btn-primary">Registrar-se</a> <!-- Link para a página de registro -->
-                    </section>
-                </div>
-                <div class="col-md-6">
-                    <section class="features-section">
-                        <h2>Principais Recursos</h2>
-                        <ul>
-                            <li>Registro de Transações</li>
-                            <li>Categorização de Transações</li>
-                            <li>Relatórios Financeiros</li>
-                            <li>Gerenciamento de Categorias</li>
-                        </ul>
+                        <a href="view/login.php" class="btn btn-success">Login</a> 
+                        <a href="view/registro.php" class="btn btn-primary">Registrar-se</a> 
                     </section>
                 </div>
             </div>
         </div>
     </main>
-
     <footer>
         <div class="container">
             <p>&copy; 2024 Gerenciador Financeiro Pessoal. Todos os direitos reservados @taleszin.</p>

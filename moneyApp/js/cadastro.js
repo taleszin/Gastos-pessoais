@@ -21,11 +21,13 @@ function login() {
             data: jsonData,
             contentType: 'application/json',
             success: function(response) {
-                console.log(response);
-                if (response.success) {
-                    console.log(response);
-                    window.location.href = "../view/inicio.php";
-                }
+              var data = JSON.parse(response);
+                if (data.success) {
+                    console.log(data);
+                    window.location.href = data.redirect;
+                }   else {
+            console.error(data.error);
+              }
             },
             error: function(xhr, status, error) {
                 console.error("Erro ao realizar o login:");

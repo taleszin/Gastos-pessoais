@@ -1,12 +1,13 @@
 <?php
 include("config.php");
+include("LogService.php");
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode(file_get_contents("php://input"), true);
 
     if (isset($data['email']) && isset($data['senha'])) {
         $email = $data['email'];
         $senha = $data['senha'];
-
         $sql = "SELECT * FROM usuarios WHERE email = ?";
         $stmt = $conexao->prepare($sql);
         $stmt->bind_param("s", $email);
@@ -15,8 +16,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
+            $ID = $row['id'];
             if (password_verify($senha, $row['senha'])) {
-                echo json_encode(["success" => true, "message" => "Login Realizado com sucesso $email + $senha"]);
+                echo json_encode(["success" => true, "message" => "Login Realizado com sucesso $email + $ID", "redirect" => "../view/inicio.php"]);
+                gravaLog($email, $ID); 
                 exit();
             } else {
                 // Senha incorreta

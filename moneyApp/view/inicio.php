@@ -28,10 +28,10 @@ if(isset($_SESSION['id_usuario']) && isset($_SESSION['email'])) {
                         <a class="nav-link" href="#">Página Inicial</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Transações</a>
+                        <a class="nav-link" href="#transactions">Transações</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Relatórios</a>
+                        <a class="nav-link" href="#reports">Relatórios</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Configurações</a>
@@ -43,12 +43,19 @@ if(isset($_SESSION['id_usuario']) && isset($_SESSION['email'])) {
     </header>
 
     <main role="main" class="container mt-5">
-        <div class="jumbotron">
-            <h1 class="display-4">Bem-vindo ao Sistema de Gastos Pessoais!</h1>
-            <p class="lead">Aqui você pode controlar suas despesas e receitas de forma fácil e eficaz.</p>
+        <div class="jumbotron" id="transactions">
+            <h2 class="display-4">Transações Financeiras</h2>
+            <p class="lead">Esta seção permite que você adicione, visualize e gerencie suas transações financeiras.</p>
             <hr class="my-4">
-            <p>Use o menu acima para navegar pelas diferentes funcionalidades do sistema.</p>
+            <p>Aqui você pode adicionar novas transações, editar ou excluir transações existentes, e visualizar um resumo de suas transações.</p>
+            <p>Utilize os filtros e opções de ordenação para facilitar a visualização de suas transações.</p>
+            <p>Além disso, você pode classificar suas transações por data, tipo, categoria, etc.</p>
         </div>
+
+        <section id="reports" class="mt-5">
+            <h2>Relatórios Financeiros</h2>
+            <p>A seção de relatórios oferece uma análise detalhada de suas finanças, incluindo despesas, receitas e tendências ao longo do tempo.</p>
+        </section>
     </main>
 
     <footer class="footer bg-light text-center py-3">

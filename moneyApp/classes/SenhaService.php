@@ -1,43 +1,24 @@
 <?php
-session_start(); // Inicia a sessão
-
-// Inclui o arquivo de configuração do banco de dados
 include("config.php");
-
-// Verifica se a requisição é do tipo POST
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recebe os dados JSON enviados pelo JavaScript
     $json_data = file_get_contents("php://input");
-
     $usuario = json_decode($json_data, true);
+    if (isset($usuario['nova_senha'])) {
+        $sql = "UPDATE usuarios SET senha = ? WHERE email = ?";
+        $stmt = $conexao->prepare($sql);
+        if ($stmt === false) {
+            die("Erro na preparação da declaração SQL: " . $conexao->error);
+        }
+        $senha_hash = password_hash($usuario['nova_senha'], PASSWORD_DEFAULT);
+        $stmt->bind_param("ss", $senha_hash, $usuario['email']);
 
-    // Prepara a declaração SQL para atualizar a senha do usuário
-    $sql = "UPDATE usuarios SET senha = ? WHERE email = ?";
+        if ($stmt->execute() === true) {
+            echo json_encode(["message" => "Senha atualizada com sucesso"]);
+        } else {
+            echo json_encode(["error" => "Erro ao atualizar a senha: " . $stmt->error]);
+        }
 
-    // Prepara a declaração
-    $stmt = $conexao->prepare($sql);
-
-    // Verifica se houve algum erro na preparação da declaração
-    if ($stmt === false) {
-        die("Erro na preparação da declaração SQL: " . $conexao->error);
-    }
-
-    // Hash da senha fornecida pelo usuário
-    $senha_hash = password_hash($usuario['senha'], PASSWORD_DEFAULT);
-
-    // Vincula os parâmetros da declaração SQL
-    $stmt->bind_param("ss", $senha_hash, $usuario['email']);
-
-    // Executa a declaração
-    if ($stmt->execute() === true) {
-        // Se a execução for bem-sucedida, envia uma resposta de sucesso
-        echo "Senha atualizada com sucesso.";
+        $stmt->close();
     } else {
-        // Se ocorrer um erro, envie uma resposta de erro
-        echo "Erro ao atualizar a senha: " . $stmt->error;
+        echo json_encode(["error" => "Nova senha não recebida"]);
     }
-
-    // Fecha a declaração
-    $stmt->close();
-}
 ?>

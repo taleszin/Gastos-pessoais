@@ -9,33 +9,43 @@ include("../classes/LoginService.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Gerenciador Financeiro Pessoal</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/comum.css">
 </head>
 <body>
-    <div class="container">
-        <div class="row justify-content-center mt-5">
+    <header>
+    </header>
+
+    <main role="main" class="container mt-5">
+        <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
                         <h3 class="mb-0">Login - Gerenciador Financeiro Pessoal</h3>
                     </div>
                     <div class="card-body">
-                    <div id="error-message" style="color: red;"></div>
-                    <form id="login-form">
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="senha">Senha:</label>
-                            <input type="password" class="form-control" id="senha" name="senha" required>
-                        </div>
-                        <button type="button" class="btn btn-primary" onclick="login();">Entrar</button>
-                    </form>
+                        <div id="error-message" style="color: red;"></div>
+                        <form id="login-form">
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="senha">Senha:</label>
+                                <input type="password" class="form-control" id="senha" name="senha" required>
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="login();">Entrar</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
+
+    <footer class="footer bg-light text-center py-3">
+        <div class="container">
+            <span class="text-muted">&copy; <?php echo date("Y"); ?> Sistema de Gastos Pessoais. Todos os direitos reservados.</span>
+        </div>
+    </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

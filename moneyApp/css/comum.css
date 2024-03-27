@@ -1,19 +1,16 @@
-/* Estilo para o cabeçalho (header) */
+
 header {
     text-align: center;
-    background-color: #4CAF50; /* Verde */
-    color: #FFFFFF; /* Branco */
-    padding: 20px 0; /* Espaçamento interno */
+    color: #FFFFFF; 
+    padding: 20px 0; 
 }
 
-/* Estilo para o rodapé (footer) */
 footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: #4CAF50; /* Verde */
-    color: #FFFFFF; /* Branco */
-    padding: 10px 0; /* Espaçamento interno */
+    color: #FFFFFF; 
+    padding: 10px 0; 
     text-align: center;
 }
 

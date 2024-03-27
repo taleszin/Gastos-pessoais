@@ -81,23 +81,23 @@ function trocarSenha() {
     // Coleta os dados do formulário
     var senhaAtual = $("#senha_atual").val();
     var novaSenha = $("#nova_senha").val();
-    var confirmarNovaSenha = $("#confirmar_nova_senha").val();
+    var confirma = $("#confirmar_nova_senha").val();
 
     // Verifica se as novas senhas coincidem
-    if (novaSenha !== confirmarNovaSenha) {
-        alert("As novas senhas não coincidem.");
+    if (novaSenha !== confirma) {
+        alert("A senha do campo confirma deve ser a mesma do campo nova senha!");
         return;
     }
 
     // Cria um objeto com os dados da troca de senha
-    var dadosTrocaSenha = {
+    var dados = {
         senha_atual: senhaAtual,
         nova_senha: novaSenha
     };
 
     // Converte o objeto em formato JSON
-    var jsonData = JSON.stringify(dadosTrocaSenha);
-
+    var jsonData = JSON.stringify(dados);
+    console.log(jsonData);
     // Envia os dados para o servidor via AJAX
     $.ajax({
         url: '../classes/SenhaService.php', 
@@ -105,7 +105,6 @@ function trocarSenha() {
         contentType: 'application/json',
         data: jsonData,
         success: function(response) {
-            // Manipule a resposta do servidor aqui, se necessário
             console.log("Senha alterada com sucesso.");
         },
         error: function(xhr, status, error) {

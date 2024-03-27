@@ -2,6 +2,34 @@
 include("config.php");
 include("LogService.php");
 
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    // Verificar se o parâmetro 'id' está presente na solicitação GET
+    if(isset($_GET['id'])) {
+        $ID = $_GET['id'];
+        $sql_select = "SELECT * FROM money.gastos WHERE UserID = ?";
+        $stmt_select = $conexao->prepare($sql_select);
+        $stmt_select->bind_param("i", $ID);
+        $stmt_select->execute();
+        $result = $stmt_select->get_result();
+        $transacoes = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $transacoes[] = array(
+                'id' => $row['id'],
+                'descricao' => $row['descricao'],
+                'valor' => $row['valor'],
+                'data' => $row['data']
+            );
+        }
+
+        echo json_encode($transacoes);
+        exit();
+    } else {
+        // A solicitação GET será tratada quando o usuário acionar a função editarTransacao() no JavaScript
+    }
+}
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode(file_get_contents("php://input"), true);
     if (isset($data['dados'])) {
@@ -10,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $gastoKeys = array_keys($gasto);
         if (count(array_diff($requiredProperties, $gastoKeys)) == 0) {
             // Prepara e executa a inserção no banco de dados
-            $sql_insert = "INSERT INTO money.gastos (usuario_id, descricao, valor, data) VALUES (?, ?, ?, ?)";
+            $sql_insert = "INSERT INTO money.gastos (UserID, descricao, valor, data) VALUES (?, ?, ?, ?)";
             $stmt_insert = $conexao->prepare($sql_insert);
             $stmt_insert->bind_param("isds", $gasto['id'], $gasto['descricao'], $gasto['valor'], $gasto['data']);
             $stmt_insert->execute();

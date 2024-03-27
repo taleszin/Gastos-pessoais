@@ -1,12 +1,9 @@
 <?php
 session_start();
-if(!isset($_SESSION['id_usuario']) || !isset($_SESSION['email'])) {
-    // Usuário não está logado, redireciona para a página de login
-    header("Location: login.php");
-    exit;
+if(isset($_SESSION['id_usuario']) && isset($_SESSION['email'])) {
+    $id_usuario = $_SESSION['id_usuario'];
+    $email = $_SESSION['email'];
 }
-$id_usuario = $_SESSION['id_usuario'];
-$email = $_SESSION['email'];
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +11,7 @@ $email = $_SESSION['email'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gastos Pessoais</title>
+    <title>Relatórios Financeiros - Sistema de Gastos Pessoais</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -28,13 +25,13 @@ $email = $_SESSION['email'];
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Página Inicial</a>
+                        <a class="nav-link" href="inicio.php">Página Inicial</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="transactions.php">Transações</a>
+                        <a class="nav-link" href="#transactions">Transações</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="relatorio.php">Relatórios</a>
+                        <a class="nav-link" href="#">Relatórios Financeiros</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Configurações</a>
@@ -46,19 +43,19 @@ $email = $_SESSION['email'];
     </header>
 
     <main role="main" class="container mt-5">
-        <div class="jumbotron" id="transactions">
-            <h2 class="display-4">Transações Financeiras</h2>
-            <p class="lead">Esta seção permite que você adicione, visualize e gerencie suas transações financeiras.</p>
+        <div class="jumbotron" id="reports">
+            <h2 class="display-4">Relatórios Financeiros</h2>
+            <p class="lead">Esta seção oferece uma análise detalhada de suas finanças, incluindo despesas, receitas e tendências ao longo do tempo.</p>
             <hr class="my-4">
-            <p>Aqui você pode adicionar novas transações, editar ou excluir transações existentes, e visualizar um resumo de suas transações.</p>
-            <p>Utilize os filtros e opções de ordenação para facilitar a visualização de suas transações.</p>
-            <p>Além disso, você pode classificar suas transações por data, tipo, categoria, etc.</p>
+            <h3>Opções de Relatórios:</h3>
+            <ul>
+                <li>Gerar Planilha de Gastos</li>
+                <li>Gerar Relatório de Últimas Transações</li>
+                <li>Visualizar Tendências de Gastos</li>
+                <!-- Adicione mais opções de relatórios conforme necessário -->
+            </ul>
+            <p>Escolha uma das opções acima para gerar o relatório desejado.</p>
         </div>
-
-        <section id="reports" class="mt-5">
-            <h2>Relatórios Financeiros</h2>
-            <p>A seção de relatórios oferece uma análise detalhada de suas finanças, incluindo despesas, receitas e tendências ao longo do tempo.</p>
-        </section>
     </main>
 
     <footer class="footer bg-light text-center py-3">

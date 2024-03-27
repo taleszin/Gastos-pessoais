@@ -18,8 +18,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $row = $result->fetch_assoc();
             $ID = $row['id'];
             if (password_verify($senha, $row['senha'])) {
+                session_start(); 
+                $_SESSION['id_usuario'] = $ID;
+                $_SESSION['email'] = $email;
                 echo json_encode(["success" => true, "message" => "Login Realizado com sucesso $email + $ID", "redirect" => "../view/inicio.php"]);
-                gravaLog($email, $ID); 
+                gravaEntrada($email, $ID); 
                 exit();
             } else {
                 // Senha incorreta

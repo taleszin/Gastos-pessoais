@@ -1,7 +1,7 @@
 <?php
 // Inclui o arquivo de configuração do banco de dados
 include("config.php");
-
+include("LogService.php");
 // Verifica se a requisição é do tipo POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recebe os dados JSON enviados pelo JavaScript

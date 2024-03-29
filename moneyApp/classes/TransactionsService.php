@@ -14,18 +14,19 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $transacoes = array();
 
         while ($row = $result->fetch_assoc()) {
+            $data = date('d/m/Y', strtotime($row['data']));
             $transacoes[] = array(
                 'id' => $row['id'],
                 'descricao' => $row['descricao'],
                 'valor' => $row['valor'],
-                'data' => $row['data']
+                'data' => $data
             );
         }
 
         echo json_encode($transacoes);
         exit();
     } else {
-        // A solicitação GET será tratada quando o usuário acionar a função editarTransacao() no JavaScript
+
     }
 }
 

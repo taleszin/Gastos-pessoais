@@ -57,7 +57,7 @@ if(isset($_SESSION['id_usuario']) && isset($_SESSION['email'])) {
             <h3>Opções de Transações:</h3>
             <ul>
                 <li><a href="#" onclick="CriarGasto()">Registrar Gasto</a></li>
-                <li><a href="#" onclick="editarTransacao()">Editar Transação</a></li>
+                <li><a href="#" onclick="editarTransacao()">Histórico de Transações</a></li>
                 <li><a href="#" onclick="excluirTransacao()">Excluir Transação</a></li>
                 <!-- Adicione mais opções de transações conforme necessário -->
             </ul>

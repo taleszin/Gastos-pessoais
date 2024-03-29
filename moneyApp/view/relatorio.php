@@ -3,6 +3,11 @@ session_start();
 if(isset($_SESSION['id_usuario']) && isset($_SESSION['email'])) {
     $id_usuario = $_SESSION['id_usuario'];
     $email = $_SESSION['email'];
+} else {
+    session_unset();
+    session_destroy();
+    header("Location: login.php");
+    exit; 
 }
 ?>
 
@@ -16,12 +21,12 @@ if(isset($_SESSION['id_usuario']) && isset($_SESSION['email'])) {
 </head>
 <body>
     <header>
+        <input type="hidden" id="id_usuario" value="<?= $id_usuario ?>">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#">Gastos Pessoais</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
@@ -49,10 +54,9 @@ if(isset($_SESSION['id_usuario']) && isset($_SESSION['email'])) {
             <hr class="my-4">
             <h3>Opções de Relatórios:</h3>
             <ul>
-                <li>Gerar Planilha de Gastos</li>
-                <li>Gerar Relatório de Últimas Transações</li>
-                <li>Visualizar Tendências de Gastos</li>
-                <!-- Adicione mais opções de relatórios conforme necessário -->
+                <li><a href="#" onclick="gerarPlanilha()">Gerar Planilha de Gastos</a></li>
+                <li><a href="#" onclick="gerarRelatorio()">Gerar Relatório de Últimas Transações</a></li>
+                <li><a href="#" onclick="visualizarTendencias()">Visualizar Tendências de Gastos</a></li>
             </ul>
             <p>Escolha uma das opções acima para gerar o relatório desejado.</p>
         </div>
@@ -67,5 +71,6 @@ if(isset($_SESSION['id_usuario']) && isset($_SESSION['email'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="../js/relatorio.js"></script>
 </body>
 </html>

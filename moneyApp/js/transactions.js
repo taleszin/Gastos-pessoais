@@ -136,8 +136,10 @@ function editarTransacao() {
         data: {id: id},
         dataType: 'json',
         success: function(response) {
-            // Limpar a tabela de transações
             $('#transactionTable tbody').empty();
+            if (response.length === 0) {
+                $('#transactionTable tbody').append('<tr><td colspan="5">Não há dados</td></tr>');
+            }
             for (var i = 0; i < response.length; i++) {
                 var transaction = response[i];
                 $('#transactionTable tbody').append(

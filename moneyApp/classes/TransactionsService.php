@@ -3,33 +3,41 @@ include("config.php");
 include("LogService.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    // Verificar se o parâmetro 'id' está presente na solicitação GET
     if(isset($_GET['id'])) {
         $ID = $_GET['id'];
-        $sql_select = "SELECT * FROM money.gastos WHERE UserID = ?";
-        $stmt_select = $conexao->prepare($sql_select);
-        $stmt_select->bind_param("i", $ID);
-        $stmt_select->execute();
-        $result = $stmt_select->get_result();
-        $transacoes = array();
+            $sql_select = "SELECT * FROM money.gastos WHERE UserID = ?";
+            $stmt_select = $conexao->prepare($sql_select);
+            $stmt_select->bind_param("i", $ID);
+            $stmt_select->execute();
+            $result = $stmt_select->get_result();
+            $transacoes = array();
 
-        while ($row = $result->fetch_assoc()) {
-            $data = date('d/m/Y', strtotime($row['data']));
-            $transacoes[] = array(
-                'id' => $row['id'],
-                'descricao' => $row['descricao'],
-                'valor' => $row['valor'],
-                'data' => $data
-            );
-        }
-
-        echo json_encode($transacoes);
-        exit();
+            while ($row = $result->fetch_assoc()) {
+                $data = date('d/m/Y', strtotime($row['data']));
+                $transacoes[] = array(
+                    'id' => $row['id'],
+                    'descricao' => $row['descricao'],
+                    'valor' => $row['valor'],
+                    'data' => $data
+                );
+            }
+            echo json_encode($transacoes);
+            exit();
+        
     } else {
-
     }
 }
-
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['idCompra'])) {
+            $idCompra = $_GET['idCompra'];
+            $sql_select = "DELETE FROM money.gastos WHERE id = ?";
+            $stmt_select = $conexao->prepare($sql_select);
+            $stmt_select->bind_param("i", $idCompra);
+            $stmt_select->execute();
+            $result = $stmt_select->get_result();
+            echo json_encode(["success" => true, "message" => "Transação deletada com sucesso"]);
+            exit();
+        
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode(file_get_contents("php://input"), true);
@@ -44,15 +52,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt_insert->bind_param("isds", $gasto['id'], $gasto['descricao'], $gasto['valor'], $gasto['data']);
             $stmt_insert->execute();
 
-            echo json_encode(["success" => true, "message" => "Gasto inserido com sucesso."]);
+            echo json_encode(["success" => true, "message" => "gasto inserido com sucesso"]);
             exit();
         } else {
-            echo json_encode(["success" => false, "error" => "Alguma propriedade está faltando"]);
+            echo json_encode(["success" => false, "error" => "alguma propriedade esta faltando"]);
             exit();
         }
     } else {
         // Dados de entrada inválidos
-        echo json_encode(["success" => false, "error" => "Dados de entrada invalidos."]);
+        echo json_encode(["success" => false, "error" => "dados de entrada invalidos"]);
         exit();
     }
 }

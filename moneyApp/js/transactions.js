@@ -1,4 +1,3 @@
-
 function CriarGasto() {
     var popupContent = `
         <div class="modal fade" id="criarGastoModal" tabindex="-1" role="dialog" aria-labelledby="criarGastoModalLabel" aria-hidden="true">
@@ -70,7 +69,6 @@ function registraGasto() {
         valor: valor,
         data: data,
         id: id
-     
     };
 
     var jsonData = JSON.stringify({ dados: dados });
@@ -86,8 +84,8 @@ function registraGasto() {
                 console.log("deu certo" + data.success);
                 $("#criarGastoModal").modal("hide");
                 $("#confirmaModal").modal("show");
-            }
-            else { console.log("deu erro");
+            } else {
+                console.log("deu erro");
             }           
         },
         error: function(xhr, status, error) {
@@ -95,6 +93,7 @@ function registraGasto() {
         }
     });
 }
+
 function editarTransacao() {
     var popupContent = `
         <div class="modal fade" id="editarTransacaoModal" tabindex="-1" role="dialog" aria-labelledby="editarTransacaoModalLabel" aria-hidden="true">
@@ -143,11 +142,11 @@ function editarTransacao() {
                 var transaction = response[i];
                 $('#transactionTable tbody').append(
                     '<tr>' +
-                    '<td>' + transaction.id + '</td>' +
+                    '<td id =' + transaction.id + '>' + transaction.id + '</td>' +
                     '<td>' + transaction.descricao + '</td>' +
                     '<td>' + transaction.valor + '</td>' +
                     '<td>' + transaction.data + '</td>' +
-                    '</tr>'
+                    '<td><button type="button" class="btn btn-danger" data-dismiss="modal" onclick="excluirTransacao(' + transaction.id + ');">Excluir</button></td></tr>'
                 );
             }
         },
@@ -157,4 +156,21 @@ function editarTransacao() {
     });
 }
 
-
+function excluirTransacao(idCompra){
+    $.ajax({
+        url: '../classes/TransactionsService.php',
+        type: 'GET',
+        data: {idCompra: idCompra},
+        dataType: 'json',
+        success: function(response) {
+            if (response.success){
+                console.log("Transação Excluída com sucesso!");
+            } else {
+                console.log("Ocorreu um erro.");
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Erro ao excluir transação:', status, error);
+        }
+    });
+}
